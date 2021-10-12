@@ -38,7 +38,7 @@ const Messages = ({ person, conversation }) => {
   const [messages, setMessages] = useState([]);
 
   useEffect(() => {
-    scrollRef.current?.scrollIntoView();
+    scrollRef.current?.scrollIntoView(false);
   }, [messages]);
 
   useEffect(() => {
@@ -101,7 +101,7 @@ const Messages = ({ person, conversation }) => {
       <Box className={classes.component}>
         {messages &&
           messages.map((message) => (
-            <Box className={classes.container}>
+            <Box className={classes.container} ref={scrollRef}>
               <Message message={message}></Message>
             </Box>
           ))}
