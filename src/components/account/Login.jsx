@@ -10,6 +10,8 @@ import {
 import React, { useContext } from "react";
 import GoogleLogin from "react-google-login";
 import { AccountContext } from "../../context/AccountProvider";
+import { clientId } from "../../constants/data";
+import { addUser } from "../../services/api";
 
 const useStyles = makeStyles({
   component: {
@@ -57,12 +59,12 @@ const Login = ({ classes }) => {
   const { account, setAccount } = useContext(AccountContext);
   const classname = useStyles();
   const qrurl = "https://www.ginifab.com/feeds/qr_code/img/qrcode.jpg";
-  const clientId =
-    "757486680955-emfdqc8cd75los1gh2k6od9g3lbq5fjv.apps.googleusercontent.com";
+  
 
-  const onLoginSuccess = (res) => {
+  const onLoginSuccess = async(res) => {
     console.log("login success", res.profileObj);
     setAccount(res.profileObj);
+    await addUser(res.profileObj);
   };
   const onLoginFailure = () => {
     console.log("login failure");

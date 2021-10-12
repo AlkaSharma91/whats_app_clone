@@ -1,8 +1,9 @@
 import { Box } from "@material-ui/core";
 import { Chat } from "@material-ui/icons";
 import { makeStyles } from "@material-ui/styles";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { AccountContext } from "../../context/AccountProvider";
+import InfoDrawer from "../drawer/InfoDrawer";
 import HeaderMenu from "./HeaderMenu";
 
 const useStyles = makeStyles({
@@ -34,16 +35,24 @@ const useStyles = makeStyles({
   }
 });
 const Header = () => {
+  const [open, setOpen] = useState()
   const { account } = useContext(AccountContext);
   const classes = useStyles();
+  const toggleDrawer =() =>{
+    setOpen(true)
+    
+  }
   return (
+    <>
     <Box className={classes.header}>
-      <img  className={classes.avatar}src={account.imageUrl} alt="display pic" />
+      <img onClick={toggleDrawer} className={classes.avatar}src={account.imageUrl} alt="display pic" />
       <Box className={classes.icon}>
         <Chat />
         <HeaderMenu/>
       </Box>
     </Box>
+    <InfoDrawer open={open} setOpen={setOpen}/>
+    </>
   );
 };
 
